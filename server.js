@@ -5,8 +5,6 @@ const querystring = require('querystring');
 const express = require('express');
 const app = express();
 
-weather.setLang('en');
-
 app.get('/', async (req, resp) =>{
 
     let { city, lat, lon } = req.query;
@@ -27,9 +25,8 @@ app.get('/', async (req, resp) =>{
 
         const { temp } = responseTemp.data.main;
 
-        spotifyApi.
-
-        resp.json({ temp });
+        const reponse = await axios.get("https://api.spotify.com/v1/recommendations?limit=10&market=BR&seed_genres=pop&min_energy=0.4&min_popularity=50", { headers: { 'Authorization': 'Bearer ' } })
+          console.log(response);
         
     } catch (error) {
 
