@@ -1,5 +1,4 @@
-const weather = require('openweather-apis');
-const SpotifyWebApi = require('spotify-web-api-node');
+require('dotenv/config');
 const axios = require('axios');
 const querystring = require('querystring');
 const express = require('express');
@@ -24,9 +23,13 @@ app.get('/', async (req, resp) =>{
         const responseTemp =  await axios.get(urlOpenWeather);
 
         const { temp } = responseTemp.data.main;
+        const auth = process.env.SPOTIFY_AUTH;
+        // const reponse = await axios.get("https://api.spotify.com/v1/recommendations?limit=10&market=BR&seed_genres=pop&min_energy=0.4&min_popularity=50", { headers: { 'Authorization': 'Bearer BQChqYGAifrRN57p_vAtEiEyrcadGWTGGI7rCUkogDrfXz-1Cz2dgOPbApjY8boAHwpMnil8S1vev4A8TMPMkl1ZALAImUfppOZTkClJQLPbK1dqA8HaprbIHf8lkCja39hjE8nKennQ2EGR9sXBg36HMDVr4nBl2pzgeZNivK5DXN61' }})
+        const reponse = await axios.get("https://api.spotify.com/v1/recommendations?limit=10&market=BR&seed_genres=pop&min_energy=0.4&min_popularity=50", { headers: { 'Authorization': `Bearer ${process.env.SPOTIFY_AUTH}` }})
+        
+        console.log(reponse);
 
-        const reponse = await axios.get("https://api.spotify.com/v1/recommendations?limit=10&market=BR&seed_genres=pop&min_energy=0.4&min_popularity=50", { headers: { 'Authorization': 'Bearer ' } })
-          console.log(response);
+        resp.send(reponse);
         
     } catch (error) {
 
